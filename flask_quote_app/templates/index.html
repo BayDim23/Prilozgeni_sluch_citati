@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Случайная цитата</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div id="quote">Вы готовы?</На></div>
+        <div id="author"></div>
+        <button id="quote-btn">Ваша случайная цитата</button>
+    </div>
+
+    <script>
+        document.getElementById('quote-btn').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/get_quote');
+                const data = await response.json();
+                document.getElementById('quote').textContent = `"${data.content}"`;
+                document.getElementById('author').textContent = `- ${data.author}`;
+            } catch (error) {
+                document.getElementById('quote').textContent = 'Could not fetch a quote. Please try again.';
+                document.getElementById('author').textContent = '';
+            }
+        });
+    </script>
+</body>
+</html>
